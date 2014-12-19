@@ -1,0 +1,8 @@
+
+usage() {
+	echo "usage: git gerrit clone"
+}
+
+parse_args() {
+	
+}
