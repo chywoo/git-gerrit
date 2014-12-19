@@ -28,35 +28,32 @@ main() {
 		exit 1
 	fi
 
-	# load common functionality
-	. "$GITGERRIT_DIR/gitflow-common"
-
 	# This environmental variable fixes non-POSIX getopt style argument
-	# parsing, effectively breaking git-flow subcommand parsing on several
+	# parsing, effectively breaking git-gerrit subcommand parsing on several
 	# Linux platforms.
 	export POSIXLY_CORRECT=1
 
 	# use the shFlags project to parse the command line arguments
-	. "$GITGERRIT_DIR/gitflow-shFlags"
-	FLAGS_PARENT="git flow"
+	. "$GITGERRIT_DIR/util-shFlags"
+	FLAGS_PARENT="git gerrit"
 
-  # allow user to request git action logging
-  DEFINE_boolean show_commands false 'show actions taken (git commands)' g
+	# allow user to request git action logging
+ 	DEFINE_boolean show_commands false 'show actions taken (git commands)' g
 
-  # do actual parsing
+ 	# do actual parsing
 	FLAGS "$@" || exit $?
 	eval set -- "${FLAGS_ARGV}"
 
 	# sanity checks
 	SUBCOMMAND="$1"; shift
 
-	if [ ! -e "$GITGERRIT_DIR/git-flow-$SUBCOMMAND" ]; then
+	if [ ! -e "$GITGERRIT_DIR/git-gerrit-$SUBCOMMAND" ]; then
 		usage
 		exit 1
 	fi
 
 	# run command
-	. "$GITGERRIT_DIR/git-flow-$SUBCOMMAND"
+	. "$GITGERRIT_DIR/git-fluw-$SUBCOMMAND"
 	FLAGS_PARENT="git flow $SUBCOMMAND"
 
 	# test if the first argument is a flag (i.e. starts with '-')
